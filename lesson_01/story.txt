@@ -11,3 +11,9 @@ The code newbie's partner woke up in the middle of the night, as he often does d
 He noticed that he had recieved an invite to collaborate on on a project with his fellow code newbie.
 With anticipation he crept out of bed out of bed, so as not to disturb his 5 year old who had just pitter pattered into bed, and see what was in store!
 The partner noticed the new file was supposed to have a specific name in order to keep in line with the instruction, so he changed it.
+
+Newbie related to the "sleep issues". She wonders if that's a prerequisite for being a proper coder! Over the next few years, both "newbies"
+study and work hard. They go on to build code that changes peoples' lives for the better and both are rewarded with great satisfaction and, of
+course, oodles of money to spend on their families and many others in need.
+
+(Maybe not-so-surprising of an ending!!)
