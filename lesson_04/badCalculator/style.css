@@ -19,6 +19,9 @@ body {
     margin-bottom: 0;
     margin-right: 25%;
     text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .layout {
