@@ -7,3 +7,15 @@ img {
     margin: 0 auto;
     height: 300px;
 }
+
+#button {
+    margin: 20px auto;
+    display: block;
+    width: 200px;
+    height: 75px;
+    border-radius: 10%;
+    border: 2px solid black;
+    font-size: large;
+    color: white;
+    background-color: black;
+}
