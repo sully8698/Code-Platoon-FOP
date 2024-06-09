@@ -1,5 +1,5 @@
 document.querySelector('button').addEventListener('click', getFetch);
-const url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+const url = 'https://api.nasa.gov/planetary/apod?api_key=yF5P7muYQuWPROCRclCcJdtGk65LCjY7sV3SR7LB';
 // api key yF5P7muYQuWPROCRclCcJdtGk65LCjY7sV3SR7LB
 fetch('https://api.nasa.gov/planetary/apod?api_key=yF5P7muYQuWPROCRclCcJdtGk65LCjY7sV3SR7LB')
     .then(res => res.json())
