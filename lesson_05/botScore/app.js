@@ -1,4 +1,4 @@
-localStorage.setItem('count', 1)
+localStorage.getItem('count', 0)
 
 let getStr = localStorage.getItem('count')
 
