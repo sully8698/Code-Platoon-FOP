@@ -12,7 +12,7 @@ class MenuItem:
         return self._item_wholesale_cost
 
     def get_item_sale_cost(self):
-        return self._item_wholesale_cost
+        return self._item_sale_price
 
 
 class SalesForDay:
@@ -27,7 +27,8 @@ class SalesForDay:
     def get_dictionary_of_items_sold(self):
         return self._dictionary_of_items_sold
 
-class InvalideSalesItemError:
+class InvalidSalesItemError(Exception):
+    pass
     def __init__(self, name):
         self._name = name
 
@@ -48,27 +49,97 @@ class LemonadeStand:
         self._menu_item_objects[menu_Item.get_name()] = menu_Item
     
     def enter_sales_for_today(self, sales_dictionary):
-        for val in self._menu_item_objects:
-            if val in sales_dictionary:
-                self._current_day += 1
-                self._sales_for_day.append(sales_dictionary)
-        
-        # check if the try/except works, except may need some attention
+        sales = SalesForDay(0, {})  
+
         for val in sales_dictionary:
-            try:
-                val in self._menu_item_objects
+            if val not in self._menu_item_objects:
+                raise InvalidSalesItemError(val)
+        
+        sales.get_days = self._current_day
+        sales.get_dictionary_of_items_sold = sales_dictionary
+        self._sales_for_day.append(sales)
+        self._current_day += 1
+    
+    def sales_of_menu_item_for_day(self, day_num, menu_item_name):
+
+        for i in self._sales_for_day:
+            if i.get_days == day_num:
+                if menu_item_name in i.get_dictionary_of_items_sold:
+                    return i.get_dictionary_of_items_sold[menu_item_name]
+                elif menu_item_name in self._menu_item_objects:
+                    
+                    i.get_dictionary_of_items_sold[menu_item_name] = 0
+                    
+                    return i.get_dictionary_of_items_sold[menu_item_name]
+    
+    def total_sales_for_menu_item(self, menu_item_name):
+        total = 0
+        for i in range(len(self._sales_for_day)):
+            total += self.sales_of_menu_item_for_day(i, menu_item_name)
             
-            except InvalideSalesItemError():
-                return 
-                
+        
+        return total
+    
+    def total_profit_for_menu_item(self, menu_item_name):
+        total_sold = self.total_sales_for_menu_item(menu_item_name)
+        profit = total_sold * (self._menu_item_objects[menu_item_name].get_item_sale_cost() - self._menu_item_objects[menu_item_name].get_item_wholesale_cost())
+        
+        return profit
+    
+    def total_profit_of_stand(self):
+        total = 0
+        for i in range(len(self._sales_for_day)):
+            
+            for j in self._sales_for_day[i].get_dictionary_of_items_sold.keys():
+                total += self.total_profit_for_menu_item(j)
+        
+        return total
+
+def main():
+    stand = LemonadeStand("Sour Bills")
+
+    item_1 = MenuItem("sandwhich", 2.50, 6.00)
+    item_2 = MenuItem("soup", 1.00, 3.00)
+    item_3 = MenuItem("lemonade", .50, 1.25)
+
+    stand.add_menu_item(item_1)
+    stand.add_menu_item(item_2)
+    stand.add_menu_item(item_3)
+
+    day_0_sales = {
+        'lemonade' : 5,
+        'sandwhich' : 2,
+        # 'cookie' : 3
+    }
+
+    day_1_sales = {
+        'soup' : 6,
+        'sandwhich' : 2,
+        'lemonade' : 3
+    }
+
+    day_2_sales = {
+        'sandwhich' : 5,
+        'lemonade' : 10
+    }
+    
+
+
+    stand.enter_sales_for_today(day_0_sales)
+    stand.enter_sales_for_today(day_1_sales)
+    stand.enter_sales_for_today(day_2_sales)
+
+    print(stand.total_profit_of_stand())
+
+if __name__ == '__main__':
+    main()
         
 
 
 
-item_1 = MenuItem("sandwhich", 2.50, 5.00)
-item_2 = MenuItem("soup", 1.00, 3.00)
 
-stand = LemonadeStand("Sour Bills")
 
-stand.add_menu_item(item_1)
-stand.add_menu_item(item_2)
+
+
+
+
