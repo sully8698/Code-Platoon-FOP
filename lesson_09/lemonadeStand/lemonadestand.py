@@ -14,7 +14,6 @@ class MenuItem:
     def get_item_sale_cost(self):
         return self._item_sale_price
 
-
 class SalesForDay:
     def __init__(self, days_open, dictionary_of_items_sold):
         self._days_open = days_open
@@ -40,7 +39,7 @@ class LemonadeStand:
         self._name = name
         self._current_day = 0
         self._menu_item_objects = {}
-        self._sales_for_day = []
+        self._sales_history = []
 
     def get_name(self):
         return self._name
@@ -50,19 +49,21 @@ class LemonadeStand:
     
     def enter_sales_for_today(self, sales_dictionary):
         sales = SalesForDay(0, {})  
-
+        
         for val in sales_dictionary:
             if val not in self._menu_item_objects:
                 raise InvalidSalesItemError(val)
         
         sales.get_days = self._current_day
         sales.get_dictionary_of_items_sold = sales_dictionary
-        self._sales_for_day.append(sales)
+        self._sales_history.append(sales)
         self._current_day += 1
     
     def sales_of_menu_item_for_day(self, day_num, menu_item_name):
-
-        for i in self._sales_for_day:
+        if day_num > len(self._sales_history):
+            return 'No information found for that day'
+        
+        for i in self._sales_history:
             if i.get_days == day_num:
                 if menu_item_name in i.get_dictionary_of_items_sold:
                     return i.get_dictionary_of_items_sold[menu_item_name]
@@ -74,7 +75,7 @@ class LemonadeStand:
     
     def total_sales_for_menu_item(self, menu_item_name):
         total = 0
-        for i in range(len(self._sales_for_day)):
+        for i in range(len(self._sales_history)):
             total += self.sales_of_menu_item_for_day(i, menu_item_name)
             
         
@@ -86,11 +87,11 @@ class LemonadeStand:
         
         return profit
     
-    def total_profit_of_stand(self):
+    def total_profit_for_stand(self):
         total = 0
-        for i in range(len(self._sales_for_day)):
+        for i in range(len(self._sales_history)):
             
-            for j in self._sales_for_day[i].get_dictionary_of_items_sold.keys():
+            for j in self._sales_history[i].get_dictionary_of_items_sold.keys():
                 total += self.total_profit_for_menu_item(j)
         
         return total
@@ -129,7 +130,7 @@ def main():
     stand.enter_sales_for_today(day_1_sales)
     stand.enter_sales_for_today(day_2_sales)
 
-    print(stand.total_profit_of_stand())
+    print(stand.total_profit_for_stand())
 
 if __name__ == '__main__':
     main()
