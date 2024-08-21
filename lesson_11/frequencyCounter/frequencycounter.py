@@ -1,6 +1,6 @@
 # covered at 1:14:00 in lesson 11 video
 
-# time complexity is is log-linear, O(n log n)
+# time complexity is is log-linear, O(n log n), utilizing the sorted method
 # space complexity is linear, O(n)
 
 def same(list_one, list_two):
