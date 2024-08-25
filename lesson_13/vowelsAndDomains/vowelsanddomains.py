@@ -28,5 +28,7 @@ def gmails(email):
     output = re.sub(regex_pattern, '@gmail.com', email, flags=re.IGNORECASE)
     return output
 
+
+
 print(vowel_start('Errors should never pass silently. Unless explicitly silenced.'))
 # print(gmails('aa@xyz.com bbb@abc.com cccc@cisco.com'))
