@@ -4,7 +4,21 @@
 # 1. You must use ASCII values in some way to solve this challenge
 # 2. Every letter in the string must be shifted by it's corresponding index value in the list and every integer that follows it. This is a bit tricky so I'll give an example.
 
+def shift_letters(string, list):
+    my_sum = sum(list)
+    new_string = ''
+    counter = 0
+    for letter in string:
+        asc2 = ord(letter) 
+        if asc2 + my_sum > 122:
+            asc2 = (asc2 + my_sum - 122) + 96
+        else:
+            asc2 += my_sum
+        new_string += chr(asc2)
+        my_sum -= list[counter]
+        counter += 1
 
+    return new_string
 
 # Example 1:
 # Input: s = "abc", shifts = [3,5,9]
